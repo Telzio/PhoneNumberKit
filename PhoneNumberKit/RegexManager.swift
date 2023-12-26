@@ -121,6 +121,7 @@ final class RegexManager {
     // MARK: String and replace
 
     func replaceStringByRegex(_ pattern: String, string: String, template: String = "") -> String {
+        let newTemplate = template.replacingOccurrences(of: "-", with: " ")
         do {
             var replacementResult = string
             let regex = try regexWithPattern(pattern)
@@ -132,12 +133,12 @@ final class RegexManager {
                         in: string,
                         options: [],
                         range: range,
-                        withTemplate: template
+                        withTemplate: newTemplate
                     )
                 }
                 return replacementResult
             } else if matches.count > 1 {
-                replacementResult = regex.stringByReplacingMatches(in: string, withTemplate: template)
+                replacementResult = regex.stringByReplacingMatches(in: string, withTemplate: newTemplate)
             }
             return replacementResult
         } catch {
